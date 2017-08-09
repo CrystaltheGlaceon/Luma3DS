@@ -33,6 +33,7 @@
 #include "hbloader.h"
 #include "utils.h"
 #include "MyThread.h"
+#include "config.h"
 #include "menus/process_patches.h"
 #include "menus/miscellaneous.h"
 
@@ -94,10 +95,18 @@ Handle terminationRequestEvent;
 
 int main(void)
 {
+    s64 out;
+    if(R_FAILED(svcGetSystemInfo(&out, 0x10000, 3))) svcBreak(USERBREAK_ASSERT);
+    u32 config = (u32)out;
+
     Result res = 0;
     Handle notificationHandle;
 
-    MyThread *menuThread = menuCreateThread(), *errDispThread = errDispCreateThread(), *hbldrThread = hbldrCreateThread();
+    MyThread *errDispThread = errDispCreateThread(), *hbldrThread = hbldrCreateThread();
+    MyThread *menuThread;
+
+    if(!CONFIG(PLACEBOROSALINAMENU))
+        menuThread = menuCreateThread();
 
     if(R_FAILED(srvEnableNotification(&notificationHandle)))
         svcBreak(USERBREAK_ASSERT);
@@ -125,8 +134,8 @@ int main(void)
         }
     }
     while(!terminationRequest);
-
-    MyThread_Join(menuThread, -1LL);
+    if(!CONFIG(PLACEBOROSALINAMENU))
+        MyThread_Join(menuThread, -1LL);
     MyThread_Join(errDispThread, -1LL);
     MyThread_Join(hbldrThread, -1LL);
 

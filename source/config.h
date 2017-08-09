@@ -33,7 +33,7 @@
 #define BOOTCONFIG(a, b) ((configData.bootConfig >> (a)) & (b))
 
 #define CONFIG_FILE         "config.bin"
-#define CONFIG_VERSIONMAJOR 2
+#define CONFIG_VERSIONMAJOR 20
 #define CONFIG_VERSIONMINOR 0
 
 #define BOOTCFG_NAND         BOOTCONFIG(0, 7)
@@ -59,7 +59,8 @@ enum singleOptions
     SHOWGBABOOT,
     PATCHACCESS,
     PATCHUNITINFO,
-    DISABLEARM11EXCHANDLERS
+    DISABLEARM11EXCHANDLERS,
+    PLACEBOROSALINAMENU
 };
 
 typedef enum ConfigurationStatus

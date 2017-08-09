@@ -94,6 +94,7 @@ void configMenu(bool oldPinStatus, u32 oldPinMode)
                                         "( ) Patch ARM9 access",
                                         "( ) Set developer UNITINFO",
                                         "( ) Disable ARM11 exception handlers",
+                                        "( ) Disable Rosalina Menu",
                                       };
 
     const char *optionsDescription[]  = { "Select the default EmuNAND.\n\n"
@@ -191,7 +192,11 @@ void configMenu(bool oldPinStatus, u32 oldPinMode)
                                           "Note: Disabling the exception handlers\n"
                                           "will disqualify you from submitting\n"
                                           "issues or bug reports to the Luma3DS\n"
-                                          "GitHub repository!"
+                                          "GitHub repository!",
+
+                                          "This disables the Rosalina menu.\n"
+                                          "This is not necessary unless having\n"
+                                          "it available freaks you out."
                                        };
 
     struct multiOption {
@@ -214,6 +219,7 @@ void configMenu(bool oldPinStatus, u32 oldPinMode)
     } singleOptions[] = {
         { .visible = isSdMode },
         { .visible = isSdMode },
+        { .visible = true },
         { .visible = true },
         { .visible = true },
         { .visible = true },
